@@ -1,0 +1,6 @@
+table inet nat {
+ chain postrouting {
+ type nat hook postrouting priority srcnat;
+ oifname "ens19" masquerade
+ }
+}
