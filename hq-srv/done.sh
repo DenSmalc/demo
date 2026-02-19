@@ -16,6 +16,13 @@ check_error () {
   fi
 }
 
+# 0. Установка openssl-gost
+echo "Установка openssl-gost..." | tee -a $LOG
+if ! rpm -q openssl-gost &>/dev/null; then
+    dnf install -y openssl-gost
+    check_error
+fi
+
 # 1. Создание центра сертификации
 echo "Создание CA..." | tee -a $LOG
 
@@ -27,7 +34,7 @@ check_error
 
 # Проверка наличия ГОСТ-провайдера
 if ! openssl list -public-key-algorithms | grep -q gost; then
-  echo "❌ Провайдер ГОСТ не найден! Установите openssl-gost." | tee -a $LOG
+  echo "❌ Провайдер ГОСТ не найден!" | tee -a $LOG
   exit 1
 fi
 
