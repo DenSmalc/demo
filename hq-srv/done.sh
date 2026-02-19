@@ -25,18 +25,23 @@ echo 1000 > /etc/pki/CA/serial
 chmod 700 /etc/pki/CA/private
 check_error
 
-control openssl-gost enabled
+# Проверка наличия ГОСТ-провайдера
+if ! openssl list -public-key-algorithms | grep -q gost; then
+  echo "❌ Провайдер ГОСТ не найден! Установите openssl-gost." | tee -a $LOG
+  exit 1
+fi
+
+# Генерация ключа ГОСТ
+openssl genpkey -algorithm gost2012_256 -pkeyopt paramset:TCB \
+  -out /etc/pki/CA/private/ca.key
 check_error
 
-openssl genkey -algorithm gost2012_256 -pkeyopt paramset:TCB \
--out /etc/pki/CA/private/ca.key
-check_error
-
+# Создание самоподписанного сертификата
 openssl req -x509 -new -md_gost12_256 \
--key /etc/pki/CA/private/ca.key \
--out /etc/pki/CA/certs/ca.crt \
--days 3650 \
--subj "/CN=AU-TEAM Root CA"
+  -key /etc/pki/CA/private/ca.key \
+  -out /etc/pki/CA/certs/ca.crt \
+  -days 3650 \
+  -subj "/CN=AU-TEAM Root CA"
 check_error
 
 echo "✅ CA создан" | tee -a $LOG
