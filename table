@@ -1,0 +1,29 @@
+table inet filter {
+chain input {
+type filter hook input priority 0; policy drop;
+log prefix "Dropped Input: " level debug
+iif lo accept
+ct state established, related accept
+tcp dport { 22,514,53,80,443,3015,445,139,88,2026,8080,2049,389,631} accept
+udp dport { 53,123,500,4500,88,137,8080,2049,631} accept
+ip protocol icmp accept
+ip protocol esp accept
+ip protocol gre accept
+ip protocol ospf accept
+}
+chain forward {
+type filter hook forward priority 0; policy drop;
+log prefix "Dropped forward: " level debug
+iif lo accept
+ct state established,related accept
+tcp dport { 22,514,53,80,443,3015,445,139,88,2026,8080,2049,389,631} accept
+udp dport { 53,123,500,4500,88,137,8080,2049,631} accept
+ip protocol icmp accept
+ip protocol esp accept
+ip protocol gre accept
+ip protocol ospf accept
+}
+chain output {
+type filter hook output priority 0; policy accept;
+}
+}
