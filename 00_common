@@ -1,0 +1,9 @@
+if $fromhost-ip contains `192.168.0.62` then {
+*.warn /opt/hq-rtr/hq-rtr.log
+}
+if $fromhost-ip contains `10.5.5.2` then {
+*.warn /opt/br-rtr/br-rtr.log
+}
+if $fromhost-ip contains `192.168.1.1` then {
+*.warn /opt/br-srv/br-srv.log
+}
