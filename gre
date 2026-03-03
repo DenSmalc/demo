@@ -1,0 +1,9 @@
+conn gre
+type=tunnel
+authby=secret ​Для BR-RTR
+left=10.5.5.1   ​left=10.5.5.2
+right=10.5.5.2 ​right=10.5.5.1
+leftprotoport=gre
+rightprotoport=gre
+auto=start
+pfs=no
