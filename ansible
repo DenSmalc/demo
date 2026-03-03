@@ -1,0 +1,10 @@
+	name: Инвентаризация
+	hosts: hq-srv, hq-cli
+	tasks:
+		name: получение данных с хоста
+		copy:
+		dest: /etc/ansible/PC-INFO/{{ ansible_hostname }}.yml
+		content: l
+		Hostnane: {{ ansible_hostname }}
+		IP_Address: {{ ansible_default_ipv4.address })
+		delegate_to: localhost
