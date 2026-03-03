@@ -4,8 +4,8 @@ table inet filter {
     log prefix "Dropped Input: " level debug
     iif lo accept
     ct state established, related accept
-    tcp dport { 22,514,53,80,443,3015,445,139,88,2026,8080,2049,389,631,3000} accept
-    udp dport { 53,123,500,4500,88,137,8080,2049,631,3000} accept
+    tcp dport { 22,514,53,80,443,3015,445,139,88,2026,8080,2049,389,631,3000,9090,9100} accept
+    udp dport { 53,123,500,4500,88,137,8080,2049,631,3000,9090,9100} accept
     ip protocol icmp accept
     ip protocol esp accept
     ip protocol gre accept
@@ -16,8 +16,8 @@ table inet filter {
     log prefix "Dropped forward: " level debug
     iif lo accept
     ct state established,related accept
-    tcp dport { 22,514,53,80,443,3015,445,139,88,2026,8080,2049,389,631,3000} accept
-    udp dport { 53,123,500,4500,88,137,8080,2049,631,3000} accept
+    tcp dport { 22,514,53,80,443,3015,445,139,88,2026,8080,2049,389,631,3000,9090,9100} accept
+    udp dport { 53,123,500,4500,88,137,8080,2049,631,3000,9090,9100} accept
     ip protocol icmp accept
     ip protocol esp accept
     ip protocol gre accept
