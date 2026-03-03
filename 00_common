@@ -1,9 +1,11 @@
-if $fromhost-ip contains `192.168.0.62` then {
-*.warn /opt/hq-rtr/hq-rtr.log
+table inet nat {
+chain postrouting{
+type nat hook postrouting priority srcnat;
+oifname “ens19” masquerade
 }
-if $fromhost-ip contains `10.5.5.2` then {
-*.warn /opt/br-rtr/br-rtr.log
+chain prerouting{
+type nat hook prerouting priority filter;
+ip daddr 172.16.1.1 tcp dport 8080 dnat ip to 192.168.1.2:80
+ip daddr 172.16.1.1 tcp dport 2026 dnat ip to 192.168.1.2:2026
 }
-if $fromhost-ip contains `192.168.1.1` then {
-*.warn /opt/br-srv/br-srv.log
 }
