@@ -29,15 +29,3 @@ table inet filter {
 
 }
 
-table inet nat {
-chain postrouting{
-type nat hook postrouting priority srcnat;
-oifname “ens19” masquerade
-}
-chain prerouting{
-type nat hook prerouting priority filter;
-ip daddr 172.16.1.1 tcp dport 8080 dnat ip to 192.168.1.2:80
-ip daddr 172.16.1.1 tcp dport 2026 dnat ip to 192.168.1.2:2026
-}
-}
-
